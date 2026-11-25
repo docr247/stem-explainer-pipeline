@@ -1,0 +1,8 @@
+.tts/
+__pycache__/
+src/out/
+src/ep*/
+src/short/
+src/short*/
+src/thumbs/
+*.tmp.mp4
