@@ -1,22 +1,97 @@
 {
   "channel": "Ravi's Tech Lab",
   "series": "Inside the Chip",
-  "playlist": {"name": "Computer Engineering 101", "id": "PLT6z28qw0fmU"},
+  "playlist": {
+    "name": "Computer Engineering 101",
+    "id": "PLT6z28qw0fmU"
+  },
   "episodes": [
-    {"n": 1, "topic": "How does a computer actually boot?", "status": "made", "long_id": null, "short_id": null},
-    {"n": 2, "topic": "How does a microcontroller actually run your code?", "status": "made", "long_id": null, "short_id": null},
-    {"n": 3, "topic": "What really happens when you press a key?", "status": "made", "long_id": null, "short_id": null},
-    {"n": 4, "topic": "How does USB know what you plugged in?", "status": "made", "long_id": null, "short_id": null},
-    {"n": 5, "topic": "I2C vs SPI vs UART: how chips talk", "status": "made", "long_id": null, "short_id": null},
-    {"n": 6, "topic": "How does PWM dim an LED?", "status": "published", "long_id": "L_-kANzmOhM", "short_id": "tFq2lOvDY8k"},
-    {"n": 7, "topic": "Interrupts: how a CPU gets tapped on the shoulder", "status": "next"},
-    {"n": 8, "topic": "How does an ADC turn the real world into numbers?", "status": "queued"},
-    {"n": 9, "topic": "How does your phone's touchscreen sense your finger?", "status": "queued"},
-    {"n": 10, "topic": "How do Wi-Fi and Bluetooth chips send bits through the air?", "status": "queued"},
-    {"n": 11, "topic": "What is an RTOS, and why does your car need one?", "status": "queued"},
-    {"n": 12, "topic": "How does a 3D printer or CNC machine know where it is?", "status": "queued"},
-    {"n": 13, "topic": "How does a smartwatch read your heart rate? (PPG)", "status": "queued"},
-    {"n": 14, "topic": "How does a prosthetic hand read muscle signals? (EMG)", "status": "queued"},
-    {"n": 15, "topic": "How do brain-computer interfaces decode thoughts?", "status": "queued"}
+    {
+      "n": 1,
+      "topic": "How does a computer actually boot?",
+      "status": "made",
+      "long_id": null,
+      "short_id": null
+    },
+    {
+      "n": 2,
+      "topic": "How does a microcontroller actually run your code?",
+      "status": "made",
+      "long_id": null,
+      "short_id": null
+    },
+    {
+      "n": 3,
+      "topic": "What really happens when you press a key?",
+      "status": "made",
+      "long_id": null,
+      "short_id": null
+    },
+    {
+      "n": 4,
+      "topic": "How does USB know what you plugged in?",
+      "status": "made",
+      "long_id": null,
+      "short_id": null
+    },
+    {
+      "n": 5,
+      "topic": "I2C vs SPI vs UART: how chips talk",
+      "status": "made",
+      "long_id": null,
+      "short_id": null
+    },
+    {
+      "n": 6,
+      "topic": "How does PWM dim an LED?",
+      "status": "published",
+      "long_id": "L_-kANzmOhM",
+      "short_id": "tFq2lOvDY8k"
+    },
+    {
+      "n": 7,
+      "topic": "Interrupts: how a CPU gets tapped on the shoulder",
+      "status": "uploading"
+    },
+    {
+      "n": 8,
+      "topic": "How does an ADC turn the real world into numbers?",
+      "status": "queued"
+    },
+    {
+      "n": 9,
+      "topic": "How does your phone's touchscreen sense your finger?",
+      "status": "queued"
+    },
+    {
+      "n": 10,
+      "topic": "How do Wi-Fi and Bluetooth chips send bits through the air?",
+      "status": "queued"
+    },
+    {
+      "n": 11,
+      "topic": "What is an RTOS, and why does your car need one?",
+      "status": "queued"
+    },
+    {
+      "n": 12,
+      "topic": "How does a 3D printer or CNC machine know where it is?",
+      "status": "queued"
+    },
+    {
+      "n": 13,
+      "topic": "How does a smartwatch read your heart rate? (PPG)",
+      "status": "queued"
+    },
+    {
+      "n": 14,
+      "topic": "How does a prosthetic hand read muscle signals? (EMG)",
+      "status": "queued"
+    },
+    {
+      "n": 15,
+      "topic": "How do brain-computer interfaces decode thoughts?",
+      "status": "queued"
+    }
   ]
 }
