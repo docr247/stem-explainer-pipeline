@@ -61,12 +61,18 @@
     {
       "n": 8,
       "topic": "How does an ADC turn the real world into numbers?",
-      "status": "queued"
+      "status": "planned",
+      "planned_for": "2026-11-25",
+      "slot": 2,
+      "format": "build-up"
     },
     {
       "n": 9,
       "topic": "How does your phone's touchscreen sense your finger?",
-      "status": "queued"
+      "status": "planned",
+      "planned_for": "2026-11-25",
+      "slot": 3,
+      "format": "versus"
     },
     {
       "n": 10,
