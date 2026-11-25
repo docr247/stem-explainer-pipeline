@@ -61,10 +61,12 @@
     {
       "n": 8,
       "topic": "How does an ADC turn the real world into numbers?",
-      "status": "planned",
+      "status": "producing",
       "planned_for": "2026-11-25",
       "slot": 2,
-      "format": "build-up"
+      "format": "build-up",
+      "claimed_at": "2026-11-25T14:32:28+04:00",
+      "attempts": 1
     },
     {
       "n": 9,
