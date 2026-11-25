@@ -2,7 +2,7 @@
 
 This is the procedure a scheduled run follows to make **one new episode** of the "Inside the Chip" series (a long-form video, a Short and a thumbnail) and publish it to **Ravi's Tech Lab** on YouTube. No computer of Ravi's is involved: everything happens in the cloud workspace, GitHub and Zapier.
 
-Repo: `https://github.com/{{OWNER}}/stem-explainer-pipeline` (public). Raw files: `https://raw.githubusercontent.com/{{OWNER}}/stem-explainer-pipeline/main/<path>`.
+Repo: `https://github.com/docr247/stem-explainer-pipeline` (public). Raw files: `https://raw.githubusercontent.com/docr247/stem-explainer-pipeline/main/<path>`.
 
 ## 0. Prepare
 1. Clone the repo (attach it with push access first), `cd` into it, run `bash setup.sh`. It must print `setup ok`.
