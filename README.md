@@ -14,6 +14,6 @@ Every episode is drawn entirely in code (Python + Pillow + ffmpeg) and narrated 
 | `src/epN.py`, `src/shortN.py` | Each episode's long-form and Short |
 | `src/thumb_epN.py` | Each episode's thumbnail |
 | `src/narrate.py` | Adds narration and assembles the final video |
-| `media/epNN/` | The latest finished videos and thumbnails, kept online so Zapier can upload them |
+| `media` branch | The current episode's video files only, overwritten each run (backed up to Google Drive first) |
 
 Make an episode by hand: `bash setup.sh && cd src && python3 narrate.py ep6 && python3 narrate.py short6`.

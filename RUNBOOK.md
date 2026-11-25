@@ -2,7 +2,7 @@
 
 Procedure for the scheduled runs that make and publish the **Tech 101** series on **Ravi's Tech Lab** (YouTube). Each episode is one long-form video (6–10 minutes), one Short and one thumbnail. Everything happens online (cloud workspace, GitHub, Zapier); Ravi's computer is never involved.
 
-Repo: `https://github.com/docr247/stem-explainer-pipeline` (public). Raw files: `https://raw.githubusercontent.com/docr247/stem-explainer-pipeline/main/<path>`.
+Repo: `https://github.com/docr247/stem-explainer-pipeline` (public). `main` holds the code and `queue.json` only; the current episode's video files live on the `media` branch (see B3) and are backed up to Ravi's Google Drive after upload (B4.5).
 
 ## Schedule (Asia/Dubai time)
 - **05:07 planner run:** follow *A. Plan the day*.
@@ -43,10 +43,13 @@ Use the latest finished episode as the code template (`ep7.py`, `short7.py`, `th
 3. `src/thumb_epN.py` writes `thumbs/epN_thumbnail.jpg`: 1280×720 JPEG under 2 MB, same system as earlier thumbnails (a big glowing subject on the left; a 2–3 line heavy headline on the right with one amber word; one tilted amber tag; nothing important in the bottom-right corner). Open it and check nothing is clipped.
 4. QA: `ffprobe` both videos (long-form 1920×1080 and 6–10 minutes; Short 1080×1920 and under 60 s), and check `ffmpeg -af volumedetect` gives a mean around −16 to −18 dB.
 
-### B3. Put the files online
-1. Make the upload copy of the long-form smaller: `ffmpeg -i <long> -c:v libx264 -preset medium -crf 23 -tune animation -c:a aac -b:a 128k media/epNN/long.mp4`. Copy the Short to `media/epNN/short.mp4` and the thumbnail to `media/epNN/thumb.jpg`.
-2. Set the episode's status to `"uploading"`, then commit the media together with the new `src/` files, and push.
-3. Confirm each raw URL returns HTTP 200 before uploading (retry for up to 2 minutes).
+### B3. Put the files online (the `media` branch)
+Video files never go on `main`. They live on a separate branch called `media` that holds **only the current episode's files**. Each run overwrites it, so old videos don't pile up in the repo.
+1. **Backup check first.** Every episode in `queue.json` with status `published` must have `"drive_backup": true`. If one doesn't, its files are still on the `media` branch: back them up now (step B4.5), before overwriting anything. If the backup fails, stop: do not overwrite the branch, and tell Ravi.
+2. Make the upload copy of the long-form smaller: `ffmpeg -i <long> -c:v libx264 -preset medium -crf 23 -tune animation -c:a aac -b:a 128k long.mp4`. Use the rendered Short as `short.mp4` and the thumbnail as `thumb.jpg`.
+3. Build the branch in a fresh, empty folder outside the repo, for example `/tmp/mediaNN/`: put the three files in `media/epNN/` inside it, `git init -b media`, commit, then `git push --force https://github.com/docr247/stem-explainer-pipeline media`. **Only ever force-push the branch named `media`.** Never force-push `main` or any other branch, and never delete branches.
+4. Raw URLs: `https://raw.githubusercontent.com/docr247/stem-explainer-pipeline/media/media/epNN/long.mp4` (and `short.mp4`, `thumb.jpg`). Confirm each returns HTTP 200 before uploading (retry for up to 2 minutes).
+5. On `main`, set the episode's status to `"uploading"`, then commit it together with the new `src/` files, and push.
 
 ### B4. Upload to YouTube with Zapier
 App: YouTube (`selected_api` `YouTubeV4CLIAPI`). Inspect the action first if its schema might have changed.
@@ -58,11 +61,14 @@ App: YouTube (`selected_api` `YouTubeV4CLIAPI`). Inspect the action first if its
 2. **Short:** the same action, with `video` = raw URL of `short.mp4`, a title ending in `#Shorts` (under 60 characters), a 2–3 sentence description naming the full video, and `#Shorts` first in the hashtags. No thumbnail.
 3. If the long-form thumbnail did not take, set it with `upload_video_thumbnail` (tool `youtube_update_video_thumbnail`).
 4. **Playlist:** `add_video_to_playlist` (tool `youtube_add_video_to_playlist`), `playlist_id` `"PLT6z28qw0fmU"` ("Tech101"), long-form first, then the Short.
+5. **Back up to Google Drive** (Ravi's `VideoToBackup` folder): Google Drive app (`selected_api` `GoogleDriveCLIAPI`), action `file` (tool `google_drive_upload_file`), once per file:
+   - `file`: the file's raw URL on the `media` branch; `folder`: `"1sJcONe4hSRVJVXYUh7_EcwDbcq1zd25z"`; `convert`: `"false"`
+   - `new_name`: `epNN_long_<slug>`, `epNN_short_<slug>` or `epNN_thumb_<slug>` (slug = a few lowercase words of the topic joined by `_`); `new_extension`: `"mp4"` or `"jpg"`
+   - Check each result's `fileSize` matches the file's size. Retry a failed backup once, then record `"drive_backup": false` and tell Ravi.
 
 ### B5. Record and tidy
-1. In `queue.json`, set the episode to `"published"` with `long_id`, `short_id`, `published` (ISO time), `long_title` and `short_title`.
-2. Delete `media/` folders for episodes published more than 2 days ago (`git rm -r`), then commit and push.
-3. Send Ravi one short message with the episode title and both YouTube links.
+1. In `queue.json`, set the episode to `"published"` with `long_id`, `short_id`, `published` (ISO time), `long_title`, `short_title` and `"drive_backup": true` (only once all three backups succeeded). Commit and push.
+2. Send Ravi one short message with the episode title and both YouTube links.
 
 ## If something fails
 - Never publish half an episode on purpose: if the long-form upload fails, do not upload the Short.
