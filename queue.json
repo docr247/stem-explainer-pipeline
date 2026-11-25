@@ -51,12 +51,17 @@
     {
       "n": 7,
       "topic": "Interrupts: how a CPU gets tapped on the shoulder",
-      "status": "uploading"
+      "status": "published",
+      "published": "2026-11-25",
+      "long_id": "HS7Gq9j-UiM",
+      "short_id": "UPu23M1Hwcg",
+      "long_title": "Your CPU Never Checks the Button (How Interrupts Really Work)",
+      "short_title": "Your CPU Never Checks This Button #Shorts"
     },
     {
       "n": 8,
       "topic": "How does an ADC turn the real world into numbers?",
-      "status": "queued"
+      "status": "next"
     },
     {
       "n": 9,
