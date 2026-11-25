@@ -61,12 +61,17 @@
     {
       "n": 8,
       "topic": "How does an ADC turn the real world into numbers?",
-      "status": "uploading",
+      "status": "published",
       "planned_for": "2026-11-25",
       "slot": 2,
       "format": "build-up",
       "claimed_at": "2026-11-25T14:32:28+04:00",
-      "attempts": 1
+      "attempts": 1,
+      "long_id": "m2XBU_cLJJM",
+      "short_id": "E1qT_FsKX-M",
+      "published": "2026-11-25T14:53:03+04:00",
+      "long_title": "Your Chip Plays a Guessing Game (How an ADC Really Works)",
+      "short_title": "Your Chip Guesses 12 Times to Read a Voltage #Shorts"
     },
     {
       "n": 9,
