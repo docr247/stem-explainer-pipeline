@@ -14,7 +14,7 @@ Attach `docr247/stem-explainer-pipeline` with push access, clone it, `cd` in, an
 
 ## A. Plan the day
 1. Today's date in Asia/Dubai is **D**. If three episodes already have `"planned_for": "D"`, stop: the day is planned.
-2. Take episodes in queue order: first any `"queued"` episodes from Ravi's original list (numbers 8–15), then new topics. Give the three chosen episodes `"planned_for": "D"`, `"slot": 1|2|3` and `"status": "planned"`.
+2. Carry over first: any episode still `"planned"` or `"failed"` from an earlier day counts toward today's three (re-date it to D and give it the earliest slots). Then take `"queued"` episodes in order (Ravi's original list, numbers 8–15, comes first), then new topics. Give the chosen episodes `"planned_for": "D"`, `"slot": 1|2|3` and `"status": "planned"`. Today's three means three in total, counting any already published today.
 3. **New topics** (once the original list runs out, or to top up): "all things tech" for a curious general audience. Rotate across areas so no two consecutive episodes share one: computing and chips; the internet and networking; phones and gadgets; AI and software; energy, batteries and EVs; space and satellites; sensors, robotics and the human body (Ravi's PhD is in rehabilitative robotics and neurophysiological signal decoding); everyday tech (GPS, QR codes, noise cancelling, microwaves, cameras). Phrase each as a "how does X actually work?" question with a visual answer. Never repeat or near-repeat a topic already in `queue.json`.
 4. Also pick each episode's **format**, rotating so consecutive episodes differ: `deep-dive` (step-by-step), `versus` (X vs Y), `myth-buster` (3 common beliefs, true or false), `what-happens-if` (follow one event through a system), `history` (how we got from A to B), `build-up` (start from one transistor or one wire and add layers).
 5. Append new topics as episodes with the next numbers, `status`, `planned_for`, `slot` and `format`. Keep at least 6 `"queued"` topics beyond today. Commit and push.
@@ -23,7 +23,7 @@ Attach `docr247/stem-explainer-pipeline` with push access, clone it, `cd` in, an
 ### B0. Pick and claim
 1. If `schedule.upload_blocked_until` is in the future, stop and do nothing.
 2. If nothing has `"planned_for"` today, do *A. Plan the day* first.
-3. Pick today's lowest-slot episode with status `planned` (or `failed` with fewer than 2 `attempts`). If an episode is `uploading`, search YouTube for its title (`youtube_find_video`) before anything else; never upload an episode twice.
+3. Pick today's lowest-slot episode with status `planned` (or `failed` with fewer than 2 `attempts`); if there is none for today, take the oldest such episode from an earlier day. If three episodes were already published today, stop. If an episode is `uploading`, search YouTube for its title (`youtube_find_video`) before anything else; never upload an episode twice.
 4. **Claim it:** set `"status": "producing"`, `"claimed_at"` (ISO time), increment `attempts`, commit and push. If the push is rejected, pull and re-check that nobody else claimed it. Ignore episodes another run claimed less than 3 hours ago.
 5. Call its number **N** (two-digit **NN**).
 
