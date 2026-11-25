@@ -1,8 +1,8 @@
 {
   "channel": "Ravi's Tech Lab",
-  "series": "Inside the Chip",
+  "series": "Tech 101",
   "playlist": {
-    "name": "Computer Engineering 101",
+    "name": "Tech101",
     "id": "PLT6z28qw0fmU"
   },
   "episodes": [
@@ -36,14 +36,14 @@
     },
     {
       "n": 5,
-      "topic": "I2C vs SPI vs UART: how chips talk",
+      "topic": "I2C vs SPI vs UART, explained with an oscilloscope",
       "status": "made",
       "long_id": null,
       "short_id": null
     },
     {
       "n": 6,
-      "topic": "How does PWM dim an LED?",
+      "topic": "How does PWM dim an LED or control a motor?",
       "status": "published",
       "long_id": "L_-kANzmOhM",
       "short_id": "tFq2lOvDY8k"
@@ -61,7 +61,7 @@
     {
       "n": 8,
       "topic": "How does an ADC turn the real world into numbers?",
-      "status": "next"
+      "status": "queued"
     },
     {
       "n": 9,
@@ -98,5 +98,16 @@
       "topic": "How do brain-computer interfaces decode thoughts?",
       "status": "queued"
     }
-  ]
+  ],
+  "schedule": {
+    "timezone": "Asia/Dubai",
+    "episodes_per_day": 3,
+    "slots": [
+      "06:00",
+      "10:00",
+      "14:00"
+    ],
+    "planner": "05:07 picks the day's 3 episodes",
+    "upload_blocked_until": null
+  }
 }

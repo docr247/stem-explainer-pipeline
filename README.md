@@ -1,8 +1,8 @@
 # stem-explainer-pipeline
 
-Code and episode queue for the **"Inside the Chip"** explainer series on Ravi's Tech Lab (YouTube): short animated, narrated explainers on how computers, microcontrollers and electronics actually work.
+Code and episode queue for the **Tech 101** explainer series on Ravi's Tech Lab (YouTube): short animated, narrated explainers on how computers, microcontrollers and electronics actually work.
 
-Every episode is drawn entirely in code (Python + Pillow + ffmpeg) and narrated with a free local voice model (Kokoro). A daily scheduled run makes the next episode in `queue.json` and publishes it, following `RUNBOOK.md`.
+Every episode is drawn entirely in code (Python + Pillow + ffmpeg) and narrated with a free local voice model (Kokoro). Scheduled runs plan three episodes a day and publish them at about 06:00, 10:00 and 14:00 Dubai time, following `RUNBOOK.md`.
 
 | Path | What it is |
 | --- | --- |
