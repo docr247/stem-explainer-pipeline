@@ -103,14 +103,18 @@
     {
       "n": 11,
       "topic": "What is an RTOS, and why does your car need one?",
-      "status": "uploading",
+      "status": "published",
       "planned_for": "2026-11-26",
       "slot": 2,
       "format": "what-happens-if",
       "claimed_at": "2026-11-26T16:14:50+04:00",
       "attempts": 1,
-      "drive_backup": false,
-      "note": "Manual test 2026-11-26: made without Zapier. Drive connector uploaded the Short (ep11_short_rtos_car.mp4) and thumbnail (ep11_thumb_rtos_car.jpg) to VideoToBackup; the long-form (16.7 MB, or 9.6 MB re-encoded) was refused by the connector's ~3 MB per-file limit. Not on YouTube. src/ep11.py, short11.py, thumb_ep11.py are on main; do not re-render. Awaiting Ravi's decision on how to deliver the long-form."
+      "drive_backup": true,
+      "long_id": "z3wsaWjEb1g",
+      "short_id": "xfsjrd0MoPo",
+      "published": "2026-11-26T18:26:06+04:00",
+      "long_title": "Your Brakes Can't Wait Their Turn (What Is an RTOS?)",
+      "short_title": "Your Brakes Can't Wait for the Dashboard #Shorts"
     },
     {
       "n": 12,
