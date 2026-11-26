@@ -78,14 +78,14 @@
     {
       "n": 9,
       "topic": "How does your phone's touchscreen sense your finger?",
-      "status": "failed",
+      "status": "planned",
       "planned_for": "2026-11-26",
       "slot": 1,
       "format": "versus",
       "claimed_at": "2026-11-26T06:30:00+04:00",
       "attempts": 2,
-      "error": "B4.1 long-form upload: Zapier 'This action has been throttled without retry' at 06:05, 06:08 and 07:38 Dubai; nothing reached YouTube. Files ready on media branch (media/ep09).",
-      "drive_backup": true
+      "drive_backup": true,
+      "note": "Already made, checked and backed up on 2026-11-26: src/ep9.py, src/short9.py and src/thumb_ep9.py are on main, and long.mp4, short.mp4 and thumb.jpg are on the media branch in media/ep09 (drive_backup true). Do NOT rewrite or re-render. Resume at B3.4: confirm the raw URLs return 200, then B4.1-B4.4 (long-form with thumbnail, then Short, then playlist) and B5; skip B4.5 (backup done). Long-form title: 'Why Your Phone Ignores a Pen (Resistive vs Capacitive Touchscreens)'. Chapters: 0:00 Why your phone ignores a pen; 0:39 Step 1: The question; 1:11 Step 2: Resistive touchscreens; 2:52 Step 3: What is capacitance?; 3:50 Step 4: Self-capacitance and ghost touches; 4:30 Step 5: Mutual capacitance; 6:24 Step 6: Head to head; 7:49 Recap. Short title: 'Your Touchscreen Can't Feel a Pen #Shorts'. Earlier uploads today failed because Zapier's free plan allows about 5 YouTube uploads per rolling 24 h ('This action has been throttled without retry'). Only episode 9 should be uploaded in the 13:41 run; Ravi asked to wait for the 24 h window before trying again."
     },
     {
       "n": 10,
@@ -143,6 +143,6 @@
       "14:00"
     ],
     "planner": "05:07 picks the day's 3 episodes",
-    "upload_blocked_until": null
+    "upload_blocked_until": "2026-11-26T13:35:00+04:00"
   }
 }
