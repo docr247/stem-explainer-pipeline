@@ -103,10 +103,12 @@
     {
       "n": 11,
       "topic": "What is an RTOS, and why does your car need one?",
-      "status": "planned",
+      "status": "producing",
       "planned_for": "2026-11-26",
       "slot": 2,
-      "format": "what-happens-if"
+      "format": "what-happens-if",
+      "claimed_at": "2026-11-26T16:14:50+04:00",
+      "attempts": 1
     },
     {
       "n": 12,
