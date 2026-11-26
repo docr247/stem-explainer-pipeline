@@ -78,13 +78,12 @@
     {
       "n": 9,
       "topic": "How does your phone's touchscreen sense your finger?",
-      "status": "failed",
+      "status": "uploading",
       "planned_for": "2026-11-26",
       "slot": 1,
       "format": "versus",
-      "claimed_at": "2026-11-26T05:42:30+04:00",
-      "attempts": 1,
-      "error": "B4.1 long-form upload: Zapier returned 'This action has been throttled without retry' twice (06:1x Dubai); nothing reached YouTube. Files are ready on the media branch (media/ep09)."
+      "claimed_at": "2026-11-26T06:30:00+04:00",
+      "attempts": 2
     },
     {
       "n": 10,
