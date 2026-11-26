@@ -79,19 +79,25 @@
       "n": 9,
       "topic": "How does your phone's touchscreen sense your finger?",
       "status": "planned",
-      "planned_for": "2026-11-25",
-      "slot": 3,
+      "planned_for": "2026-11-26",
+      "slot": 1,
       "format": "versus"
     },
     {
       "n": 10,
       "topic": "How do Wi-Fi and Bluetooth chips send bits through the air?",
-      "status": "queued"
+      "status": "planned",
+      "planned_for": "2026-11-26",
+      "slot": 2,
+      "format": "deep-dive"
     },
     {
       "n": 11,
       "topic": "What is an RTOS, and why does your car need one?",
-      "status": "queued"
+      "status": "planned",
+      "planned_for": "2026-11-26",
+      "slot": 3,
+      "format": "what-happens-if"
     },
     {
       "n": 12,
@@ -111,6 +117,16 @@
     {
       "n": 15,
       "topic": "How do brain-computer interfaces decode thoughts?",
+      "status": "queued"
+    },
+    {
+      "n": 16,
+      "topic": "How does GPS actually know where you are?",
+      "status": "queued"
+    },
+    {
+      "n": 17,
+      "topic": "How does a lithium-ion battery actually store energy?",
       "status": "queued"
     }
   ],
