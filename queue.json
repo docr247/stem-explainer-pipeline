@@ -78,11 +78,11 @@
     {
       "n": 9,
       "topic": "How does your phone's touchscreen sense your finger?",
-      "status": "skipped",
+      "status": "dropped",
       "format": "versus",
       "attempts": 2,
       "drive_backup": true,
-      "note": "Skipped on Ravi's request on 2026-11-26; do not pick, upload or re-render. Files were made and are backed up to Google Drive (drive_backup true); src/ep9.py, src/short9.py, src/thumb_ep9.py stay on main. Planned long-form title was 'Why Your Phone Ignores a Pen (Resistive vs Capacitive Touchscreens)'."
+      "note": "Dropped for good on Ravi's request (2026-11-26). Never pick, upload or re-render. Files are backed up to Google Drive; src/ep9.py, src/short9.py, src/thumb_ep9.py stay on main for reference."
     },
     {
       "n": 10,
@@ -91,8 +91,8 @@
       "planned_for": "2026-11-26",
       "slot": 1,
       "format": "deep-dive",
-      "claimed_at": "2026-11-26T09:31:58+04:00",
-      "attempts": 1
+      "claimed_at": "2026-11-26T15:22:13+04:00",
+      "attempts": 2
     },
     {
       "n": 11,
