@@ -87,10 +87,12 @@
     {
       "n": 10,
       "topic": "How do Wi-Fi and Bluetooth chips send bits through the air?",
-      "status": "planned",
+      "status": "producing",
       "planned_for": "2026-11-26",
       "slot": 1,
-      "format": "deep-dive"
+      "format": "deep-dive",
+      "claimed_at": "2026-11-26T09:31:58+04:00",
+      "attempts": 1
     },
     {
       "n": 11,
