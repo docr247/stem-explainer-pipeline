@@ -87,14 +87,18 @@
     {
       "n": 10,
       "topic": "How do Wi-Fi and Bluetooth chips send bits through the air?",
-      "status": "uploading",
+      "status": "published",
       "planned_for": "2026-11-26",
       "slot": 1,
       "format": "deep-dive",
       "claimed_at": "2026-11-26T15:22:13+04:00",
       "attempts": 2,
       "long_id": "S4kMsISDdIE",
-      "long_title": "Where Are the Bits in a Radio Wave? (How Wi-Fi & Bluetooth Work)"
+      "long_title": "Where Are the Bits in a Radio Wave? (How Wi-Fi & Bluetooth Work)",
+      "short_id": "zdPsxpMhBy0",
+      "published": "2026-11-26T15:42:33+04:00",
+      "short_title": "Your Wi-Fi Wiggles 2.4 Billion Times a Second #Shorts",
+      "drive_backup": true
     },
     {
       "n": 11,
