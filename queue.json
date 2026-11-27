@@ -125,7 +125,12 @@
       "format": "build-up",
       "claimed_at": "2026-11-27T05:42:50+04:00",
       "attempts": 1,
-      "long_id": "4wqXZAQOx1U"
+      "long_id": "4wqXZAQOx1U",
+      "long_title": "Your 3D Printer Can't See. It Counts. (How It Knows Where It Is)",
+      "short_id": null,
+      "short_title": "Your 3D Printer Never Checks Its Nozzle #Shorts",
+      "drive_backup": true,
+      "error": "B4.2: long-form is public and in the Tech101 playlist (4wqXZAQOx1U); Drive backups done. Short NOT uploaded: Zapier throttled upload_video twice, then the third try was blocked by a permission check. Next run: do not re-upload the long-form; check YouTube for the Short title, then upload only media/ep12/short.mp4 and add it to the playlist."
     },
     {
       "n": 13,
