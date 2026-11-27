@@ -119,7 +119,7 @@
     {
       "n": 12,
       "topic": "How does a 3D printer or CNC machine know where it is?",
-      "status": "uploading",
+      "status": "published",
       "planned_for": "2026-11-27",
       "slot": 1,
       "format": "build-up",
@@ -127,15 +127,15 @@
       "attempts": 1,
       "long_id": "4wqXZAQOx1U",
       "long_title": "Your 3D Printer Can't See. It Counts. (How It Knows Where It Is)",
-      "short_id": null,
+      "short_id": "nNim_vsXJyc",
       "short_title": "Your 3D Printer Never Checks Its Nozzle #Shorts",
       "drive_backup": true,
-      "error": "B4.2: long-form is public and in the Tech101 playlist (4wqXZAQOx1U); Drive backups done. Short still NOT uploaded: at 09:45 and 09:50 (+04:00) Zapier throttled upload_video, then a retry was blocked by a permission check (same as the 06:00 run). Confirmed at 09:45 it is not on the channel. Its file is kept at media/ep12/short.mp4 on the media branch. Next run: check YouTube for the Short title, then upload only that file and add it to the playlist."
+      "published": "2026-11-27T13:45:24+04:00"
     },
     {
       "n": 13,
       "topic": "How does a smartwatch read your heart rate? (PPG)",
-      "status": "uploading",
+      "status": "published",
       "planned_for": "2026-11-27",
       "slot": 2,
       "format": "deep-dive",
@@ -144,7 +144,9 @@
       "long_title": "Your Watch Reads Your Pulse With Light (How Heart Rate Sensors Work)",
       "short_title": "Your Watch Reads Your Pulse With a Green Light #Shorts",
       "long_id": "gLS3hZUj-dE",
-      "short_id": "xllSvyRSnpw"
+      "short_id": "xllSvyRSnpw",
+      "published": "2026-11-27T13:44:41+04:00",
+      "drive_backup": false
     },
     {
       "n": 14,
