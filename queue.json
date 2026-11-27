@@ -135,12 +135,12 @@
     {
       "n": 13,
       "topic": "How does a smartwatch read your heart rate? (PPG)",
-      "status": "failed",
+      "status": "producing",
       "planned_for": "2026-11-27",
       "slot": 2,
       "format": "deep-dive",
-      "claimed_at": "2026-11-27T09:44:06+04:00",
-      "attempts": 1,
+      "claimed_at": "2026-11-27T13:43:00+04:00",
+      "attempts": 2,
       "error": "B4.1: YouTube upload_video throttled by Zapier ('throttled without retry') at 2026-11-27T10:05+04:00; nothing reached YouTube (checked uploads). Video is finished: media/ep13/long.mp4, short.mp4, thumb.jpg are on the media branch (long-form 7:56, Short 41 s). Next run: do NOT re-render or overwrite the media branch; check YouTube for 'Your Watch Reads Your Pulse With Light (How Heart Rate Sensors Work)', then upload from the media branch. Chapters: 0:00 No wires, just light / 0:17 What we'll cover / 0:36 Step 1 Light / 1:44 Step 2 The pulse / 2:47 Step 3 Measuring / 3:51 Step 4 Finding the beats / 4:54 Step 5 Movement / 6:19 Step 6 Beyond / 7:26 Recap.",
       "long_title": "Your Watch Reads Your Pulse With Light (How Heart Rate Sensors Work)",
       "short_title": "Your Watch Reads Your Pulse With a Green Light #Shorts"
