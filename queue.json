@@ -120,19 +120,25 @@
       "n": 12,
       "topic": "How does a 3D printer or CNC machine know where it is?",
       "status": "planned",
-      "planned_for": "2026-11-26",
-      "slot": 3,
+      "planned_for": "2026-11-27",
+      "slot": 1,
       "format": "build-up"
     },
     {
       "n": 13,
       "topic": "How does a smartwatch read your heart rate? (PPG)",
-      "status": "queued"
+      "status": "planned",
+      "planned_for": "2026-11-27",
+      "slot": 2,
+      "format": "deep-dive"
     },
     {
       "n": 14,
       "topic": "How does a prosthetic hand read muscle signals? (EMG)",
-      "status": "queued"
+      "status": "planned",
+      "planned_for": "2026-11-27",
+      "slot": 3,
+      "format": "myth-buster"
     },
     {
       "n": 15,
@@ -152,6 +158,21 @@
     {
       "n": 18,
       "topic": "How does a satellite stay up without falling back to Earth?",
+      "status": "queued"
+    },
+    {
+      "n": 19,
+      "topic": "How does a web page actually reach you? (packets, routers and DNS)",
+      "status": "queued"
+    },
+    {
+      "n": 20,
+      "topic": "How do noise-cancelling headphones actually erase sound?",
+      "status": "queued"
+    },
+    {
+      "n": 21,
+      "topic": "How does a chatbot actually predict the next word?",
       "status": "queued"
     }
   ],
