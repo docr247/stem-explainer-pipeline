@@ -135,10 +135,12 @@
     {
       "n": 13,
       "topic": "How does a smartwatch read your heart rate? (PPG)",
-      "status": "planned",
+      "status": "producing",
       "planned_for": "2026-11-27",
       "slot": 2,
-      "format": "deep-dive"
+      "format": "deep-dive",
+      "claimed_at": "2026-11-27T09:44:06+04:00",
+      "attempts": 1
     },
     {
       "n": 14,
