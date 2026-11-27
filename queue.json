@@ -119,10 +119,12 @@
     {
       "n": 12,
       "topic": "How does a 3D printer or CNC machine know where it is?",
-      "status": "planned",
+      "status": "producing",
       "planned_for": "2026-11-27",
       "slot": 1,
-      "format": "build-up"
+      "format": "build-up",
+      "claimed_at": "2026-11-27T05:42:50+04:00",
+      "attempts": 1
     },
     {
       "n": 13,
