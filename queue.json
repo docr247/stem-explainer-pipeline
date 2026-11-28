@@ -45,7 +45,16 @@
       "long_length": "8:24",
       "short_seconds": 39,
       "note": "Remade 2026-11-28 at full length in the rotating styles. Not uploaded to YouTube (uploads paused pending a possible move to a new channel).",
-      "drive_backup": true
+      "drive_backup": true,
+      "t101d_status": "published",
+      "t101d_video_ids": {
+        "long": "QEVl0OKxVko",
+        "short": "XoOCIs8CwNk"
+      },
+      "t101d_thumbnail": false,
+      "t101d_published": "2026-11-28T19:44:30+04:00",
+      "t101d_playlist": true,
+      "t101d_note": "Found already on Tech101Daily (uploaded 19:44 Dubai, not recorded in queue.json by that run); recorded by the 22:41 run. Thumbnail not applied (channel not allowed yet)."
     },
     {
       "n": 3,
@@ -61,7 +70,9 @@
       "long_length": "9:08",
       "short_seconds": 39,
       "note": "Remade 2026-11-28 at full length in the rotating styles. Not uploaded to YouTube (uploads paused pending a possible move to a new channel).",
-      "drive_backup": true
+      "drive_backup": true,
+      "t101d_status": "uploading",
+      "t101d_claimed_at": "2026-11-28T22:45:00+04:00"
     },
     {
       "n": 4,
