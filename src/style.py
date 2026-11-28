@@ -372,6 +372,8 @@ def get(name, vertical=False):
     return Style(name, vertical)
 
 def for_episode(n):
-    """Style used by episode n (1-based). Episodes 1-5 were remade as chalk, paper, blueprint, chalk, paper.
-    From episode 14 the rotation continues from queue.json's "style" field; this is only a fallback."""
-    return ["chalk", "paper", "blueprint"][(n - 1) % 3]
+    """Fallback only: queue.json's "style" field decides. Episodes 1-5: chalk, paper, blueprint, chalk, paper;
+    6-13: blueprint; from 14 the rotation is chalk, paper, blueprint, ..."""
+    if n <= 5: return ["chalk", "paper", "blueprint"][(n - 1) % 3]
+    if n <= 13: return "blueprint"
+    return ["chalk", "paper", "blueprint"][(n - 14) % 3]

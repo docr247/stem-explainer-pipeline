@@ -1,93 +1,107 @@
-import os, subprocess, sys
-from PIL import Image, ImageDraw
-from render import (clamp, ease, prog, mix, fade, text, box, arrow, chip,
-                    BG, PANEL, LINE, TXT, DIM, CYAN, AMBER, GREEN, RED)
-from short import headline, caption, W, H, FPS
-from ep5 import bits_wave, PURPLE, UART_C, SPI_C, I2C_C
+"""Tech 101, episode 5 Short: three chip languages (UART, SPI, I2C). Style: paper, vertical."""
+import math, sys
+import style
+from style import clamp, prog, pop, grow, mix
+from ep5 import (UC, SC, IC, C_CLK, C_MOSI, C_MISO, C_CS, wave, scope, stamp, levf, mini_uart, mini_spi, mini_i2c,
+                 uart_scope_frame, spi_lev, kin, drop, popk)
+
+V = style.get("paper", vertical=True)
+W, H, FPS = V.W, V.H, V.FPS
+VOICE, SPEED, LANG = V.VOICE, V.SPEED, V.LANG
+CX = 500                                   # centre of the safe area (x 70..930)
+
+def tl(t, dur): return t * 8.0 / max(dur, 1e-6)
 
 def s_hook(d, t, dur):
-    headline(d, ["Chips talk in", "3 languages"], t, TXT, 300, 84)
-    k = prog(t, 0.3, 0.8)
-    chip(d, 340, 560, 400, 220, "MCU", "", PURPLE, k)
-    for i, (n, c) in enumerate([("UART", UART_C), ("SPI", SPI_C), ("I2C", I2C_C)]):
-        kk = prog(t, 1.0 + i * 0.5, 1.4 + i * 0.5)
-        y = 900 + i * 110
-        box(d, (290, y, 790, y + 90), mix(BG, c, 0.2), c, 16, 4, kk)
-        text(d, (540, y + 45), n, 52, c, "Bold", "mm", k=kk)
-    caption(d, "Here's each one, fast.", t, 1300)
+    V.headline(d, ["Chips talk in", "3 languages"], t, V.TXT, 300, 92)
+    T = tl(t, dur)
+    V.chip(d, CX - 170, 540 + drop(T, 0.5), 340, 160, "MCU", None, V.HILITE, kin(T, 0.5))
+    for i, (n, c, fn) in enumerate((("UART", UC, mini_uart), ("SPI", SC, mini_spi), ("I²C", IC, mini_i2c))):
+        a = 1.4 + i * 0.9
+        k = kin(T, a, 0.35)
+        y = 860 + i * 150 + drop(T, a, 40)
+        V.box(d, (80, y - 62, 920, y + 62), V.PANEL, None, 24, 0, k)
+        V.pill(d, (200, y), n, 40, c, k)
+        fn(d, 340, 890, y, 18, c, k, prog(T, a + 0.3, a + 1.8) if T < 6 else 1.0, st=V, width=5)
+    V.caption_v(d, "Here's how each one looks on a scope.", t, 1330)
 
 def s_uart(d, t, dur):
-    headline(d, ["UART: no clock,", "just agree on speed"], t, UART_C, 260, 64)
-    k = prog(t, 0.2, 0.6)
-    chip(d, 90, 470, 300, 170, "MCU", "", PURPLE, k, pins=False)
-    chip(d, 690, 470, 300, 170, "GPS", "", UART_C, k, pins=False)
-    d.line([390, 510, 690, 600], fill=fade(UART_C, k), width=6)
-    d.line([390, 600, 690, 510], fill=fade(UART_C, k), width=6)
-    bits_wave(d, 120, 760, 840, 110, [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1], UART_C, k, clamp((t - 1.0) / 3.0))
-    text(d, (540, 1000), "115200 baud", 56, UART_C, "Bold", "mm", mono=True, k=prog(t, 3.0, 3.5))
-    caption(d, "Two wires. Perfect for GPS and debug.", t, 1250)
+    V.headline(d, ["UART:", "no clock at all"], t, UC, 280, 92)
+    T = tl(t, dur)
+    xy = (70, 520, 930, 880)
+    scope(d, xy, kin(T, 0.3), (8, 3), st=V, tag="")
+    uart_scope_frame(d, T, t, xy, 650, 800, prog(T, 0.8, 5.0), kin(T, 0.5), st=V, lsize=20, vsize=24)
+    stamp(d, (CX, 970), "115 200 baud (example)", UC, 40, -4, kin(T, 5.2), popk(T, 5.2), st=V)
+    V.text(d, (CX, 1090), "both sides agree the speed first", 38, V.TXT, "SemiBold", "mm", k=kin(T, 5.8))
+    V.caption_v(d, "Start bit, 8 data bits, stop bit. Done.", t, 1330)
 
 def s_spi(d, t, dur):
-    headline(d, ["SPI: fast, but a", "wire for every chip"], t, SPI_C, 260, 64)
-    k = prog(t, 0.2, 0.6)
-    rv = clamp((t - 0.8) / 3.5)
-    rows = [("SCLK", SPI_C, [0] + [1, 0] * 8), ("MOSI", AMBER, [0] + sum([[b, b] for b in [1, 0, 1, 1, 0, 0, 1, 0]], [])),
-            ("MISO", GREEN, [0] + sum([[b, b] for b in [0, 1, 1, 0, 1, 0, 0, 1]], []))]
-    for i, (n, c, bits) in enumerate(rows):
-        y = 480 + i * 180
-        text(d, (90, y - 30), n, 34, c, "Bold", "lm", mono=True, k=k)
-        bits_wave(d, 90, y, 900, 90, bits, c, k, rv)
-    text(d, (540, 1060), "10s of MHz", 60, SPI_C, "Bold", "mm", mono=True, k=prog(t, 3.6, 4.1))
-    caption(d, "Displays and SD cards love it.", t, 1250)
+    V.headline(d, ["SPI: a clock", "and a tap"], t, SC, 280, 92)
+    T = tl(t, dur)
+    scope(d, (70, 480, 930, 1200), kin(T, 0.3), (6, 4), st=V, tag="")
+    U, b0, cs, clk, mosi, miso, mb, ib = spi_lev()
+    rows = [("CS", cs, C_CS, 600), ("SCLK", clk, C_CLK, 740), ("MOSI", mosi, C_MOSI, 880), ("MISO", miso, C_MISO, 1020)]
+    rv = prog(T, 1.0, 5.5)
+    for i, (n, lev, c, yc) in enumerate(rows):
+        k = kin(T, 0.5 + i * 0.2)
+        V.text(d, (100, yc - 58), n, 30, c, "Bold", "lm", k=k)
+        if n == "MISO":
+            wave(d, lev, 100, 900, yc + 40, yc - 30, c, k, rv, 6, u0=1.0 / U, u1=9.6 / U, st=V)
+        else:
+            wave(d, lev, 100, 900, yc + 40, yc - 30, c, k, rv, 6, st=V)
+    V.text(d, (CX, 1160), "1 bit out + 1 bit back per tick", 34, V.TXT, "Bold", "mm", k=kin(T, 5.8))
+    V.caption_v(d, "Fast, and a select wire for every chip.", t, 1330)
 
 def s_i2c(d, t, dur):
-    headline(d, ["I2C: two wires,", "many chips"], t, I2C_C, 260, 70)
-    k = prog(t, 0.2, 0.6)
-    d.line([180, 460, 180, 1100], fill=fade(I2C_C, k), width=7)
-    d.line([250, 460, 250, 1100], fill=fade(I2C_C, k), width=7)
-    text(d, (180, 440), "SDA", 28, I2C_C, "Bold", "mb", mono=True, k=k)
-    text(d, (250, 440), "SCL", 28, I2C_C, "Bold", "mb", mono=True, k=k)
-    devs = [("OLED", "0x3C"), ("IMU", "0x68"), ("Temp", "0x76")]
-    for i, (n, a) in enumerate(devs):
-        kk = prog(t, 0.8 + i * 0.6, 1.2 + i * 0.6)
-        y = 520 + i * 200
-        hot = i == 1 and t > 3.2
-        d.line([180, y + 60, 520, y + 60], fill=fade(I2C_C, kk), width=3)
-        d.line([250, y + 90, 520, y + 90], fill=fade(I2C_C, kk), width=3)
-        box(d, (520, y, 960, y + 150), mix(BG, AMBER, 0.25) if hot else PANEL, AMBER if hot else I2C_C, 16, 5 if hot else 3, kk)
-        text(d, (560, y + 75), n, 46, TXT, "Bold", "lm", k=kk)
-        text(d, (920, y + 75), a, 46, AMBER, "Bold", "rm", mono=True, k=kk)
-    caption(d, "Call a chip by its address. Only it answers.", t, 1250)
+    V.headline(d, ["I²C: a roll call", "on two wires"], t, IC, 280, 84)
+    T = tl(t, dur)
+    k = kin(T, 0.4)
+    ysda, yscl = 620, 680
+    V.line(d, [(80, ysda), (920, ysda)], IC, 7, k)
+    V.line(d, [(80, yscl), (920, yscl)], mix(IC, V.TXT, 0.45), 7, k)
+    V.text(d, (80, ysda - 32), "SDA", 30, IC, "Bold", "lm", k=k)
+    V.text(d, (80, yscl + 36), "SCL", 30, mix(IC, V.TXT, 0.45), "Bold", "lm", k=k)
+    devs = [("0x48", 185), ("0x50", 395), ("0x68", 605), ("0x3C", 815)]
+    ci = 1
+    for i, (ad, cx) in enumerate(devs):
+        a = 0.8 + i * 0.4
+        kk = kin(T, a)
+        lit = T > 3.4 and i == ci
+        for xx, yy in ((cx - 30, ysda), (cx + 30, yscl)):
+            V.line(d, [(xx, yy), (xx, 790)], IC, 4, kk)
+            V.circle(d, (xx, yy), 8, IC, None, k=kk, shadow=False)
+        V.chip(d, cx - 95, 790 + drop(T, a), 190, 120, ad, None, IC if lit else V.LINE, kk, pins=False)
+    if T > 2.4:
+        V.pill(d, (CX, 510 + drop(T, 2.4, 30)), "calling 0x50...", 38, V.HILITE, kin(T, 2.4, 0.3))
+    if T > 3.4:
+        stamp(d, (395, 990), "here! (ACK)", V.GOOD, 38, -6, 1.0, popk(T, 3.4), st=V)
+    mini_i2c(d, 110, 890, 1160, 22, IC, kin(T, 4.4), prog(T, 4.4, 6.4), st=V, width=5)
+    V.caption_v(d, "Only the chip that's called answers.", t, 1330)
 
 def s_cta(d, t, dur):
-    k = prog(t, 0.2, 0.8)
-    text(d, (W // 2, 640), "Which one", 84, TXT, "Bold", "mm", k=k)
-    text(d, (W // 2, 740), "should you use?", 84, TXT, "Bold", "mm", k=k)
-    k2 = prog(t, 0.9, 1.5)
-    box(d, (190, 880, 890, 1010), CYAN, CYAN, 65, 1, k2)
-    if k2 > 0.5: text(d, (W // 2, 945), "Watch the full video", 52, BG, "Bold", "mm")
-    arrow(d, (W // 2, 1180), (W // 2, 1060), CYAN, 8, prog(t, 1.4, 2.0))
+    T = tl(t, dur)
+    V.headline(d, ["UART vs SPI vs I²C", "Which one when?"], t, V.TXT, 560, 76)
+    k2 = kin(T, 1.2, 0.5)
+    p = popk(T, 1.2)
+    if p > 0.02:
+        V.box(d, (CX - 330 * p, 900 - 70 * p, CX + 330 * p, 900 + 70 * p), V.HILITE, None, 70, 0, min(1, p * 1.5))
+        V.text(d, (CX, 900), "Watch the full video", 54, V.ON_ACCENT, "Bold", "mm", k=kin(T, 1.6, 0.3))
+    V.arrow(d, (CX, 1160), (CX, 1000), V.HILITE, 10, kin(T, 2.0))
+    for i, c in enumerate((UC, SC, IC)):
+        V.circle(d, (CX - 120 + i * 120, 760), 22 * max(0.01, popk(T, 0.8 + i * 0.2)), c, None, k=k2)
 
 SCENES = [("s1", s_hook, 6), ("s2", s_uart, 8), ("s3", s_spi, 8), ("s4", s_i2c, 8), ("s5", s_cta, 5)]
 
-def frame(fn, t, dur):
-    im = Image.new("RGB", (W, H), BG)
-    fn(ImageDraw.Draw(im), t, dur)
-    a = min(clamp(t / 0.25), clamp((dur - t) / 0.25))
-    return im if a >= 1 else Image.blend(Image.new("RGB", (W, H), (0, 0, 0)), im, a)
+NARRATION = {
+ "s1": "Chips on a circuit board talk to each other in three languages. Here's what each one looks like on an oscilloscope.",
+ "s2": "You-art has no clock wire. Both sides agree a speed in advance. Then it's a start bit, eight data bits, and a stop bit. Done.",
+ "s3": "S P I has a clock, and a chip select wire for every chip. On each tick, one bit goes out, and one bit comes back. Fast!",
+ "s4": "I squared C shares just two wires between many chips. The controller calls an address, like a roll call, and only that chip answers.",
+ "s5": "So which one should you use, and when? Watch the full video.",
+}
+OUTPUT = "ep5_short_three_chip_languages_narrated.mp4"
 
-def render(name, fn, dur):
-    out, tmp = f"short5/{name}.mp4", f"short5/{name}.tmp.mp4"
-    p = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
-                          "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-crf", "18",
-                          "-preset", "veryfast", "-pix_fmt", "yuv420p", tmp], stdin=subprocess.PIPE)
-    for i in range(int(round(dur * FPS))):
-        p.stdin.write(frame(fn, i / FPS, dur).tobytes())
-    p.stdin.close()
-    if p.wait() == 0: os.replace(tmp, out)
+def render(name, fn, dur): V.render_to("short5", name, fn, dur)
 
-os.makedirs("short5", exist_ok=True)
 if __name__ == "__main__" and sys.argv[1:] == ["preview"]:
-    sheet = Image.new("RGB", (W * 5, H))
-    for i, (_, fn, dur) in enumerate(SCENES): sheet.paste(frame(fn, dur * 0.85, dur), (i * W, 0))
-    sheet.resize((W * 5 // 3, H // 3)).save("short5/sheet.jpg", quality=85)
+    V.preview("short5", SCENES)

@@ -1,88 +1,107 @@
-import os, subprocess, sys
-from PIL import Image, ImageDraw
-from render import (clamp, prog, mix, fade, text, box, arrow,
-                    BG, PANEL, LINE, TXT, DIM, CYAN, AMBER, GREEN)
-from short import headline, caption, W, H, FPS
-from ep3 import keycap, REPORT
+"""Tech 101, episode 3 Short (blueprint style): your keyboard never sends the letter A."""
+import math, sys
+import style
+from style import clamp, prog, mix
+from ep3 import keycap, report_row, glow, glow_dot, press_at
+
+V = style.get("blueprint", vertical=True)
+W, H, FPS = V.W, V.H, V.FPS
+VOICE, SPEED, LANG = V.VOICE, V.SPEED, V.LANG
+BG, PANEL, LINE, TXT, DIM = V.BG, V.PANEL, V.LINE, V.TXT, V.DIM
+CY, AM, GR, RD, PU = V.ACCENT, V.HILITE, V.GOOD, V.BAD, V.EXTRA
+CX = 500  # visual centre: content stays between x=70 and x=930
+
 
 def s_hook(d, t, dur):
-    headline(d, ["Your keyboard", "never sends", "the letter A."], t, y=300)
-    keycap(d, 540, 860, 320, "A", 1.6 < t < 2.1, prog(t, 0.5, 1.0))
-    caption(d, "So what does it actually send?", t, 1250)
+    V.headline(d, ["Your keyboard", "never sends", "the letter A"], t, TXT, 280, 80)
+    k = prog(t, 0.5, 1.0)
+    keycap(d, CX, 820, 320, "A", press_at(t, 1.6, 2.3), k)
+    if t > 2.0:
+        kk = prog(t, 2.0, 2.4)
+        V.line(d, [(CX - 190, 640), (CX + 190, 1010)], RD, 12, kk)
+    V.caption_v(d, "So what does it actually send?", t, 1330)
+
 
 def s_matrix(d, t, dur):
-    headline(d, ["It scans a", "grid of wires"], t, CYAN, 260, 70)
+    V.headline(d, ["It scans a", "grid of wires"], t, CY, 270, 80)
     k = prog(t, 0.2, 0.7)
-    x0, y0, s = 200, 480, 136
-    col = int(t * 4) % 5 if t > 0.8 else -1
-    for c in range(5):
+    n, s = 5, 150
+    x0, y0 = CX - 2 * s, 560
+    col = int((t - 0.6) * 3) % n if t > 0.6 else -1
+    hit = (2, 3)
+    pressed = t > 1.6
+    for c in range(n):
         x = x0 + c * s
-        d.line([x, y0 - 40, x, y0 + 4 * s + 40], fill=fade(AMBER if c == col else LINE, k), width=6 if c == col else 4)
-    for r in range(5):
+        if c == col: glow(d, [(x, y0 - 60), (x, y0 + (n - 1) * s + 60)], AM, 7)
+        else: V.line(d, [(x, y0 - 60), (x, y0 + (n - 1) * s + 60)], LINE, 5, k)
+    for r in range(n):
         y = y0 + r * s
-        d.line([x0 - 40, y, x0 + 4 * s + 40, y], fill=fade(LINE, k), width=4)
-        for c in range(5):
-            on = (r, c) == (2, 3) and t > 2.5
+        lit = pressed and col == hit[1] and r == hit[0]
+        if lit: glow(d, [(x0 - 60, y), (x0 + (n - 1) * s + 60, y)], GR, 7)
+        else: V.line(d, [(x0 - 60, y), (x0 + (n - 1) * s + 60, y)], LINE, 5, k)
+        for c in range(n):
+            on = pressed and (r, c) == hit
             x = x0 + c * s
-            d.rectangle([x - 22, y - 22, x + 22, y + 22], fill=fade(mix(BG, GREEN, 0.9) if on else PANEL, k),
-                        outline=fade(GREEN if on else LINE, k), width=3)
-    caption(d, "One column at a time, hundreds of times a second.", t, 1250)
+            V.box(d, (x - 26, y - 26, x + 26, y + 26), mix(BG, GR, 0.8) if on else PANEL, GR if on else LINE, 6, 3, k)
+    V.caption_v(d, "Column by column, many times a second.", t, 1330)
+
 
 def s_report(d, t, dur):
-    headline(d, ["It sends a", "number: 0x04"], t, AMBER, 260, 70)
-    for i, b in enumerate(REPORT):
-        r, c = divmod(i, 4)
-        kk = prog(t, 0.8 + i * 0.2, 1.1 + i * 0.2)
-        x, y = 130 + c * 210, 520 + r * 230
-        hot = i == 2
-        box(d, (x, y, x + 180, y + 180), mix(BG, AMBER, 0.25) if hot else PANEL, AMBER if hot else LINE, 16, 5 if hot else 2, kk)
-        text(d, (x + 90, y + 90), b, 72, AMBER if hot else TXT, mono=True, anchor="mm", k=kk)
-    text(d, (540, 1020), "8-byte HID report", 40, DIM, "Medium", "mm", k=prog(t, 2.6, 3.1))
-    caption(d, "Code 4 just means: the key in this position.", t, 1250)
+    V.headline(d, ["Then it sends", "a number"], t, AM, 270, 80)
+    vals = ["00", "00", "04", "00", "00", "00", "00", "00"]
+    for row in range(2):
+        report_row(d, CX - 2 * 190 + 10, 520 + row * 220, vals[row * 4:row * 4 + 4], 1.0, t=t, t0=0.6 + row * 0.6, step=0.15,
+                   bw=170, bh=170, gap=20, hot=(2,) if row == 0 else (), size=72)
+    k = prog(t, 2.0, 2.5)
+    V.text(d, (CX, 1000), "8-byte report", 40, DIM, "Medium", "mm", k=k)
+    V.text(d, (CX, 1110), "usage 0x04", 64, AM, "Bold", "mm", mono=True, k=prog(t, 2.6, 3.1))
+    V.text(d, (CX, 1190), "= the key in the A position", 38, TXT, "Medium", "mm", k=prog(t, 3.0, 3.5))
+    V.caption_v(d, "Not a letter. Just a key position.", t, 1330)
+
 
 def s_layout(d, t, dur):
-    headline(d, ["Your OS decides", "what it means"], t, CYAN, 260, 70)
+    V.headline(d, ["Your computer", "picks the letter"], t, CY, 270, 80)
     k = prog(t, 0.3, 0.8)
-    text(d, (540, 500), "0x04", 96, AMBER, mono=True, anchor="mm", k=k)
-    arrow(d, (460, 570), (320, 690), DIM, 6, prog(t, 1.0, 1.4))
-    arrow(d, (620, 570), (760, 690), DIM, 6, prog(t, 1.0, 1.4))
+    V.box(d, (CX - 210, 470, CX + 210, 580), mix(BG, AM, 0.2), AM, 18, 4, k)
+    V.text(d, (CX, 525), "0x04", 64, AM, "Bold", "mm", mono=True, k=k)
+    ka = prog(t, 1.0, 1.4)
+    V.arrow(d, (CX - 90, 590), (CX - 220, 700), DIM, 6, ka)
+    V.arrow(d, (CX + 90, 590), (CX + 220, 700), DIM, 6, ka)
     k2 = prog(t, 1.5, 2.0)
-    keycap(d, 290, 820, 200, "a", False, k2, GREEN)
-    text(d, (290, 980), "QWERTY", 44, GREEN, "Bold", "mm", k=k2)
-    k3 = prog(t, 2.3, 2.8)
-    keycap(d, 790, 820, 200, "q", False, k3, CYAN)
-    text(d, (790, 980), "AZERTY", 44, CYAN, "Bold", "mm", k=k3)
-    caption(d, "Same key, different letter. It's all in the layout.", t, 1250)
+    keycap(d, CX - 230, 850, 220, "a", 1.0 if t > 1.5 else 0, k2, GR)
+    V.text(d, (CX - 230, 1030), "US QWERTY", 42, GR, "Bold", "mm", k=k2)
+    k3 = prog(t, 2.4, 2.9)
+    keycap(d, CX + 230, 850, 220, "q", 1.0 if t > 2.4 else 0, k3, CY)
+    V.text(d, (CX + 230, 1030), "French AZERTY", 42, CY, "Bold", "mm", k=k3)
+    V.text(d, (CX, 1160), "same key, same code", 40, DIM, "Bold", "mm", k=prog(t, 3.2, 3.7))
+    V.caption_v(d, "QWERTY makes a. AZERTY makes q.", t, 1330)
+
 
 def s_cta(d, t, dur):
     k = prog(t, 0.2, 0.8)
-    text(d, (W // 2, 640), "From fingertip", 84, TXT, "Bold", "mm", k=k)
-    text(d, (W // 2, 740), "to pixel", 84, TXT, "Bold", "mm", k=k)
+    V.text(d, (CX, 600), "From fingertip", 84, TXT, "Bold", "mm", k=k)
+    V.text(d, (CX, 700), "to pixel", 84, TXT, "Bold", "mm", k=k)
+    V.text(d, (CX, 800), "7 steps, explained", 44, CY, "Medium", "mm", k=k)
     k2 = prog(t, 0.9, 1.5)
-    box(d, (190, 880, 890, 1010), CYAN, CYAN, 65, 1, k2)
-    if k2 > 0.5: text(d, (W // 2, 945), "Watch the full video", 52, BG, "Bold", "mm")
-    arrow(d, (W // 2, 1180), (W // 2, 1060), CYAN, 8, prog(t, 1.4, 2.0))
+    V.box(d, (CX - 330, 900, CX + 330, 1030), CY, CY, 65, 1, k2)
+    V.text(d, (CX, 965), "Watch the full video", 52, BG, "Bold", "mm", k=k2 if k2 > 0.5 else 0)
+    V.arrow(d, (CX, 1220), (CX, 1080), CY, 8, prog(t, 1.4, 2.0))
 
-SCENES = [("s1", s_hook, 6), ("s2", s_matrix, 7), ("s3", s_report, 8), ("s4", s_layout, 8), ("s5", s_cta, 5)]
 
-def frame(fn, t, dur):
-    im = Image.new("RGB", (W, H), BG)
-    fn(ImageDraw.Draw(im), t, dur)
-    a = min(clamp(t / 0.25), clamp((dur - t) / 0.25))
-    return im if a >= 1 else Image.blend(Image.new("RGB", (W, H), (0, 0, 0)), im, a)
+SCENES = [("s1", s_hook, 6), ("s2", s_matrix, 7), ("s3", s_report, 7), ("s4", s_layout, 7), ("s5", s_cta, 5)]
 
-def render(name, fn, dur):
-    out, tmp = f"short3/{name}.mp4", f"short3/{name}.tmp.mp4"
-    p = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
-                          "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-crf", "18",
-                          "-preset", "veryfast", "-pix_fmt", "yuv420p", tmp], stdin=subprocess.PIPE)
-    for i in range(int(round(dur * FPS))):
-        p.stdin.write(frame(fn, i / FPS, dur).tobytes())
-    p.stdin.close()
-    if p.wait() == 0: os.replace(tmp, out)
+NARRATION = {
+ "s1": "Your keyboard never sends the letter a. Not even once. So what does it actually send?",
+ "s2": "Under the keys is a grid of wires. A tiny chip scans it, column by column, many times a second, to find which crossing just closed.",
+ "s3": "Then it sends a number. Hex, zero four. That doesn't mean a. It just means: the key in this position.",
+ "s4": "Your computer picks the letter. On a US qwerty layout, that key is a. On French azerty, the exact same code types q.",
+ "s5": "Every step, from fingertip to pixel, is in the full video.",
+}
+OUTPUT = "ep3_short_keyboard_never_sends_a_narrated.mp4"
 
-os.makedirs("short3", exist_ok=True)
+
+def render(name, fn, dur): V.render_to("short3", name, fn, dur)
+
+
 if __name__ == "__main__" and sys.argv[1:] == ["preview"]:
-    sheet = Image.new("RGB", (W * 5, H))
-    for i, (_, fn, dur) in enumerate(SCENES): sheet.paste(frame(fn, dur * 0.85, dur), (i * W, 0))
-    sheet.resize((W * 5 // 3, H // 3)).save("short3/sheet.jpg", quality=85)
+    V.preview("short3", SCENES)

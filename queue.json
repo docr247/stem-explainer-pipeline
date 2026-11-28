@@ -11,42 +11,53 @@
       "topic": "How does a computer actually boot?",
       "status": "made",
       "long_id": null,
-      "short_id": null
+      "short_id": null,
+      "style": "chalk",
+      "format": "what-happens-if"
     },
     {
       "n": 2,
       "topic": "How does a microcontroller actually run your code?",
       "status": "made",
       "long_id": null,
-      "short_id": null
+      "short_id": null,
+      "style": "paper",
+      "format": "build-up"
     },
     {
       "n": 3,
       "topic": "What really happens when you press a key?",
       "status": "made",
       "long_id": null,
-      "short_id": null
+      "short_id": null,
+      "style": "blueprint",
+      "format": "deep-dive"
     },
     {
       "n": 4,
       "topic": "How does USB know what you plugged in?",
       "status": "made",
       "long_id": null,
-      "short_id": null
+      "short_id": null,
+      "style": "chalk",
+      "format": "what-happens-if"
     },
     {
       "n": 5,
       "topic": "I2C vs SPI vs UART, explained with an oscilloscope",
       "status": "made",
       "long_id": null,
-      "short_id": null
+      "short_id": null,
+      "style": "paper",
+      "format": "versus"
     },
     {
       "n": 6,
       "topic": "How does PWM dim an LED or control a motor?",
       "status": "published",
       "long_id": "L_-kANzmOhM",
-      "short_id": "tFq2lOvDY8k"
+      "short_id": "tFq2lOvDY8k",
+      "style": "blueprint"
     },
     {
       "n": 7,
@@ -57,7 +68,8 @@
       "short_id": "UPu23M1Hwcg",
       "long_title": "Your CPU Never Checks the Button (How Interrupts Really Work)",
       "short_title": "Your CPU Never Checks This Button #Shorts",
-      "drive_backup": true
+      "drive_backup": true,
+      "style": "blueprint"
     },
     {
       "n": 8,
@@ -73,7 +85,8 @@
       "published": "2026-11-25T14:53:03+04:00",
       "long_title": "Your Chip Plays a Guessing Game (How an ADC Really Works)",
       "short_title": "Your Chip Guesses 12 Times to Read a Voltage #Shorts",
-      "drive_backup": true
+      "drive_backup": true,
+      "style": "blueprint"
     },
     {
       "n": 9,
@@ -82,7 +95,8 @@
       "format": "versus",
       "attempts": 2,
       "drive_backup": true,
-      "note": "Dropped for good on Ravi's request (2026-11-26). Never pick, upload or re-render. Files are backed up to Google Drive; src/ep9.py, src/short9.py, src/thumb_ep9.py stay on main for reference."
+      "note": "Dropped for good on Ravi's request (2026-11-26). Never pick, upload or re-render. Files are backed up to Google Drive; src/ep9.py, src/short9.py, src/thumb_ep9.py stay on main for reference.",
+      "style": "blueprint"
     },
     {
       "n": 10,
@@ -98,7 +112,8 @@
       "short_id": "zdPsxpMhBy0",
       "published": "2026-11-26T15:42:33+04:00",
       "short_title": "Your Wi-Fi Wiggles 2.4 Billion Times a Second #Shorts",
-      "drive_backup": true
+      "drive_backup": true,
+      "style": "blueprint"
     },
     {
       "n": 11,
@@ -114,7 +129,8 @@
       "short_id": "xfsjrd0MoPo",
       "published": "2026-11-26T18:26:06+04:00",
       "long_title": "Your Brakes Can't Wait Their Turn (What Is an RTOS?)",
-      "short_title": "Your Brakes Can't Wait for the Dashboard #Shorts"
+      "short_title": "Your Brakes Can't Wait for the Dashboard #Shorts",
+      "style": "blueprint"
     },
     {
       "n": 12,
@@ -130,7 +146,8 @@
       "short_id": "nNim_vsXJyc",
       "short_title": "Your 3D Printer Never Checks Its Nozzle #Shorts",
       "drive_backup": true,
-      "published": "2026-11-27T13:45:24+04:00"
+      "published": "2026-11-27T13:45:24+04:00",
+      "style": "blueprint"
     },
     {
       "n": 13,
@@ -146,7 +163,8 @@
       "long_id": "gLS3hZUj-dE",
       "short_id": "xllSvyRSnpw",
       "published": "2026-11-27T13:44:41+04:00",
-      "drive_backup": true
+      "drive_backup": true,
+      "style": "blueprint"
     },
     {
       "n": 14,
@@ -154,7 +172,8 @@
       "status": "planned",
       "planned_for": "2026-11-27",
       "slot": 3,
-      "format": "myth-buster"
+      "format": "myth-buster",
+      "style": "chalk"
     },
     {
       "n": 15,

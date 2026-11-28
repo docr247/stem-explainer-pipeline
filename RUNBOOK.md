@@ -17,7 +17,8 @@ Attach `docr247/stem-explainer-pipeline` with push access, clone it, `cd` in, an
 2. Carry over first: any episode still `"planned"` or `"failed"` from an earlier day counts toward today's three (re-date it to D and give it the earliest slots). Then take `"queued"` episodes in order (Ravi's original list, numbers 8–15, comes first), then new topics. Give the chosen episodes `"planned_for": "D"`, `"slot": 1|2|3` and `"status": "planned"`. Today's three means three in total, counting any already published today.
 3. **New topics** (once the original list runs out, or to top up): "all things tech" for a curious general audience. Rotate across areas so no two consecutive episodes share one: computing and chips; the internet and networking; phones and gadgets; AI and software; energy, batteries and EVs; space and satellites; sensors, robotics and the human body (Ravi's PhD is in rehabilitative robotics and neurophysiological signal decoding); everyday tech (GPS, QR codes, noise cancelling, microwaves, cameras). Phrase each as a "how does X actually work?" question with a visual answer. Never repeat or near-repeat a topic already in `queue.json`.
 4. Also pick each episode's **format**, rotating so consecutive episodes differ: `deep-dive` (step-by-step), `versus` (X vs Y), `myth-buster` (3 common beliefs, true or false), `what-happens-if` (follow one event through a system), `history` (how we got from A to B), `build-up` (start from one transistor or one wire and add layers).
-5. Append new topics as episodes with the next numbers, `status`, `planned_for`, `slot` and `format`. Keep at least 6 `"queued"` topics beyond today. Commit and push.
+5. Also give each episode a **`style`**, rotating `chalk` → `paper` → `blueprint` → `chalk` … so consecutive episodes never share one (see *Styles* below). Episode 14 is `chalk`.
+6. Append new topics as episodes with the next numbers, `status`, `planned_for`, `slot`, `format` and `style`. Keep at least 6 `"queued"` topics beyond today. Commit and push.
 
 ## B. Make and publish one episode
 ### B0. Pick and claim
@@ -27,8 +28,16 @@ Attach `docr247/stem-explainer-pipeline` with push access, clone it, `cd` in, an
 4. **Claim it:** set `"status": "producing"`, `"claimed_at"` (ISO time), increment `attempts`, commit and push. If the push is rejected, pull and re-check that nobody else claimed it. Ignore episodes another run claimed less than 3 hours ago.
 5. Call its number **N** (two-digit **NN**).
 
+### Styles (three looks, three voices)
+Each episode uses the style in its `style` field in `queue.json`. All drawing goes through `src/style.py`: `S = style.get("<style>")` for the long-form and `V = style.get("<style>", vertical=True)` for the Short, then `S.text`, `S.box`, `S.line`, `S.arrow`, `S.circle`, `S.chip`, `S.pill`, `S.chrome`, `S.headline`/`S.caption_v`, `S.render_to`, `S.preview`, `S.thumb_canvas`, and the semantic colours (`S.ACCENT`, `S.HILITE`, `S.GOOD`, `S.BAD`, `S.EXTRA`, …). Set `VOICE, SPEED, LANG = S.VOICE, S.SPEED, S.LANG` so `narrate.py` uses the style's voice.
+| Style | Look | Voice and tone | Example episodes |
+| --- | --- | --- | --- |
+| `blueprint` | Dark navy, cyan/amber, Inter, glowing technical diagrams (the original look) | `am_michael`, US male: clear, confident explainer | ep3, ep6–ep13 |
+| `chalk` | Green chalkboard, hand-drawn wobbly lines and Kalam handwriting; things are drawn on with `style.grow()` | `bm_george`, UK male, slightly slower: calm lecturer ("Right.", "Now, here's the clever bit.") | ep1, ep4 |
+| `paper` | Cream paper, flat cut-out shapes with soft shadows that pop in with `style.pop()`, Fredoka/Nunito | `af_heart`, US female, a little faster: upbeat, curious, asks the viewer questions | ep2, ep5 |
+
 ### B1. Write the episode (in `src/`)
-Use the latest finished episode as the code template (`ep7.py`, `short7.py`, `thumb_ep7.py`): same helpers, colours, fonts, `chrome()` layout, fades and caption style. That look is the channel's brand, so keep it. But **every diagram must be drawn for this topic**: no recoloured copies of earlier scenes.
+Use the latest finished episode **in the same style** as the code template (blueprint: `ep13.py`; chalk: `ep4.py`; paper: `ep5.py`, plus their `short`/`thumb_` files). Keep the style's look, but **every diagram must be drawn for this topic**: no recoloured copies of earlier scenes.
 
 - **`src/epN.py`: long-form, 6–10 minutes.** About 900–1,400 narrated words over **22–32 scenes** of 1920×1080 at 30 fps, grouped into 5–7 chapters. Structure: a hook (a surprising fact or question in the first 10 seconds), a "here's what we'll cover" scene, the chapters (each opening with a `STEP k · NAME` scene), a recap, then an end card teasing the next planned or queued topic. Follow the episode's `format`. Aim for 35–60 words of narration per scene; `narrate.py` stretches each scene to fit its narration.
 - **`src/shortN.py`: Short, 30–55 seconds**, 5 scenes of 1080×1920. A bold one-line hook, 3 quick visual ideas, then a "Watch the full video" call to action. Keep content between x=70 and x=930, and above y≈1500. The Short must stay **under 60 seconds**.
@@ -40,7 +49,7 @@ Use the latest finished episode as the code template (`ep7.py`, `short7.py`, `th
 ### B2. Check, then render
 1. From inside `src/`, run `python3 epN.py preview` and `python3 shortN.py preview` (preview code samples scenes at 85% through). **Open the contact sheets and look.** For a long-form with more than 9 scenes, make the preview write several 3×3 sheets. Fix any overlap, clipped text or text running into captions, then preview again.
 2. Render from inside `src/`: `python3 narrate.py epN` and `python3 narrate.py shortN`. Note the scene durations it prints; you need them for chapter times.
-3. `src/thumb_epN.py` writes `thumbs/epN_thumbnail.jpg`: 1280×720 JPEG under 2 MB, same system as earlier thumbnails (a big glowing subject on the left; a 2–3 line heavy headline on the right with one amber word; one tilted amber tag; nothing important in the bottom-right corner). Open it and check nothing is clipped.
+3. `src/thumb_epN.py` writes `thumbs/epN_thumbnail.jpg`: 1280×720 JPEG under 2 MB, in the episode's style (start from `S.thumb_canvas()`; chalk applies `S.finish(im)`): a big subject on the left; a 2–3 line heavy headline on the right with one `S.HILITE` word; one tilted tag; nothing important in the bottom-right corner. Open it and check nothing is clipped.
 4. QA: `ffprobe` both videos (long-form 1920×1080 and 6–10 minutes; Short 1080×1920 and under 60 s), and check `ffmpeg -af volumedetect` gives a mean around −16 to −18 dB.
 
 ### B3. Put the files online (the `media` branch)
@@ -61,8 +70,8 @@ App: YouTube (`selected_api` `YouTubeV4CLIAPI`). Inspect the action first if its
 2. **Short:** the same action, with `video` = raw URL of `short.mp4`, a title ending in `#Shorts` (under 60 characters), a 2–3 sentence description naming the full video, and `#Shorts` first in the hashtags. No thumbnail.
 3. If the long-form thumbnail did not take, set it with `upload_video_thumbnail` (tool `youtube_update_video_thumbnail`).
 4. **Playlist:** `add_video_to_playlist` (tool `youtube_add_video_to_playlist`), `playlist_id` `"PLT6z28qw0fmU"` ("Tech101"), long-form first, then the Short.
-5. **Back up to Google Drive** (Ravi's `VideoToBackup` folder): Google Drive app (`selected_api` `GoogleDriveCLIAPI`), action `file` (tool `google_drive_upload_file`), once per file:
-   - `file`: the file's raw URL on the `media` branch; `folder`: `"1sJcONe4hSRVJVXYUh7_EcwDbcq1zd25z"`; `convert`: `"false"`
+5. **Back up to Google Drive**: Ravi's `VideoToBackup/Tech101/EpNN/` folder (one subfolder per episode; IDs are in `drive_folders.json`). If the episode has no folder yet, create it first with the Google Drive app's `folder` action (tool `google_drive_create_folder`, `title` `"EpNN"`, `folder` = the `Tech101` ID), and add its ID to `drive_folders.json`. Then upload with action `file` (tool `google_drive_upload_file`), once per file:
+   - `file`: the file's raw URL on the `media` branch; `folder`: the episode's folder ID; `convert`: `"false"`
    - `new_name`: `epNN_long_<slug>`, `epNN_short_<slug>` or `epNN_thumb_<slug>` (slug = a few lowercase words of the topic joined by `_`); `new_extension`: `"mp4"` or `"jpg"`
    - Check each result's `fileSize` matches the file's size. Retry a failed backup once, then record `"drive_backup": false` and tell Ravi.
 
