@@ -22,7 +22,13 @@
       "note": "Remade 2026-11-28 at full length in the rotating styles. Not uploaded to YouTube (uploads paused pending a possible move to a new channel).",
       "drive_backup": true,
       "t101d_status": "uploading",
-      "t101d_claimed_at": "2026-11-28T16:45:00+04:00"
+      "t101d_claimed_at": "2026-11-28T16:45:00+04:00",
+      "t101d_video_ids": {
+        "long": "D3CEWUuEhWU",
+        "short": null
+      },
+      "t101d_thumbnail": false,
+      "t101d_error": "Custom thumbnail refused: Tech101Daily is not allowed to set custom thumbnails yet (phone verification needed). Re-apply ep01_thumb_computer_boot.jpg once verified."
     },
     {
       "n": 2,
