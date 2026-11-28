@@ -71,8 +71,9 @@
       "short_seconds": 39,
       "note": "Remade 2026-11-28 at full length in the rotating styles. Not uploaded to YouTube (uploads paused pending a possible move to a new channel).",
       "drive_backup": true,
-      "t101d_status": "uploading",
-      "t101d_claimed_at": "2026-11-28T22:45:00+04:00"
+      "t101d_status": "failed",
+      "t101d_attempts": 1,
+      "t101d_error": "2026-11-28 22:41 run: Zapier YouTube upload_video (long-form, from Drive file 1Pz1h4_J6IU5SFoeZfGoxTgLVNpc5lWVC via Zapier hydrate link) returned 'This action has been throttled without retry' twice; a third try was blocked. Nothing was uploaded (Tech101Daily uploads list checked). Retry next run."
     },
     {
       "n": 4,
