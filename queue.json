@@ -21,14 +21,15 @@
       "short_seconds": 50,
       "note": "Remade 2026-11-28 at full length in the rotating styles. Not uploaded to YouTube (uploads paused pending a possible move to a new channel).",
       "drive_backup": true,
-      "t101d_status": "uploading",
-      "t101d_claimed_at": "2026-11-28T16:45:00+04:00",
+      "t101d_status": "published",
       "t101d_video_ids": {
         "long": "D3CEWUuEhWU",
-        "short": null
+        "short": "ubrTWCo0RRI"
       },
       "t101d_thumbnail": false,
-      "t101d_error": "Custom thumbnail refused: Tech101Daily is not allowed to set custom thumbnails yet (phone verification needed). Re-apply ep01_thumb_computer_boot.jpg once verified."
+      "t101d_error": "Custom thumbnail refused (channel not yet allowed to set custom thumbnails). Apply Drive file 1Rsyi7aLa0Z7pvr8C3--cZRgmActHT6x6 later.",
+      "t101d_published": "2026-11-28T16:45:30+04:00",
+      "t101d_playlist": true
     },
     {
       "n": 2,
@@ -272,7 +273,12 @@
     "zapier_connection_id": "027f86e2-0ee0-8444-a947-d966792b7122",
     "playlist": {
       "name": "Tech 101",
-      "id": null
-    }
+      "id": "PLGkr3H-UVuzs"
+    },
+    "thumbnails_allowed": false,
+    "notes": [
+      "2026-11-28: YouTube refuses custom thumbnails on Tech101Daily ('doesn't have permissions to upload and set custom video thumbnails'); the channel needs phone verification. Videos still upload. Episodes with t101d_thumbnail=false need their Drive thumbnail applied with upload_video_thumbnail once allowed.",
+      "Ep09 is status 'dropped' on Ravi's request (2026-11-26): skip it on Tech101Daily unless Ravi says otherwise."
+    ]
   }
 }
