@@ -20,7 +20,9 @@
       "long_length": "9:15",
       "short_seconds": 50,
       "note": "Remade 2026-11-28 at full length in the rotating styles. Not uploaded to YouTube (uploads paused pending a possible move to a new channel).",
-      "drive_backup": true
+      "drive_backup": true,
+      "t101d_status": "uploading",
+      "t101d_claimed_at": "2026-11-28T16:45:00+04:00"
     },
     {
       "n": 2,
@@ -256,5 +258,15 @@
     ],
     "planner": "05:07 picks the day's 3 episodes",
     "upload_blocked_until": "2026-11-26T13:35:00+04:00"
+  },
+  "tech101daily": {
+    "channel": "Tech101Daily",
+    "channel_id": "UCAUgQA2RugzvRtNBD-IcgpA",
+    "handle": "@tech101dailyr",
+    "zapier_connection_id": "027f86e2-0ee0-8444-a947-d966792b7122",
+    "playlist": {
+      "name": "Tech 101",
+      "id": null
+    }
   }
 }
