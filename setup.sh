@@ -22,4 +22,10 @@ if [ ! -f /usr/share/fonts/opentype/inter/Inter-Bold.otf ]; then
 fi
 [ -f /usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf ] || echo "WARNING: DejaVu Sans Mono missing (apt-get install -y fonts-dejavu-core)"
 
+# Fonts for the chalk (Kalam) and paper (Fredoka, Nunito) styles, from google/fonts (OFL).
+mkdir -p /usr/share/fonts/truetype/extra
+for f in ofl/kalam/Kalam-Regular.ttf ofl/kalam/Kalam-Bold.ttf ofl/kalam/Kalam-Light.ttf "ofl/nunito/Nunito%5Bwght%5D.ttf" "ofl/fredoka/Fredoka%5Bwdth,wght%5D.ttf"; do
+  n=$(basename "$f"); [ -s "/usr/share/fonts/truetype/extra/$n" ] || curl -sSfL -o "/usr/share/fonts/truetype/extra/$n" "https://raw.githubusercontent.com/google/fonts/main/$f"
+done
+
 python3 -c "import kokoro_onnx, soundfile, PIL; print('setup ok')"

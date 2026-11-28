@@ -120,11 +120,16 @@ SHORT6 = {
 }
 
 def build(mod, lines, outdir, final, speed):
+    voice = getattr(mod, "VOICE", VOICE)
+    speed = getattr(mod, "SPEED", speed)
+    lang = getattr(mod, "LANG", "en-us")
+    print("voice", voice, "speed", speed, "lang", lang, flush=True)
+    os.makedirs(outdir, exist_ok=True)
     tts = os.environ.get("TTS_DIR", os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".tts"))
     k = Kokoro(os.path.join(tts, "kokoro.onnx"), os.path.join(tts, "voices.bin"))
     scenes, track, sr = [], [], 24000
     for name, fn, dur in mod.SCENES:
-        a, sr = k.create(lines[name], voice=VOICE, speed=speed, lang="en-us")
+        a, sr = k.create(lines[name], voice=voice, speed=speed, lang=lang)
         d = max(dur, round(LEAD + len(a) / sr + TAIL, 2))
         scenes.append((name, fn, d))
         seg = np.zeros(int(round(d * mod.FPS)) * sr // mod.FPS, dtype=np.float32)
@@ -143,11 +148,12 @@ def build(mod, lines, outdir, final, speed):
                     "-af", "loudnorm=I=-14:TP=-1.5", "-shortest", f"{outdir}/{final}"], check=True)
 
 if __name__ == "__main__":
-    # New episodes (7+): python3 narrate.py ep7  /  python3 narrate.py short7
+    # New episodes: python3 narrate.py ep7  /  python3 narrate.py short7
     # The module must define SCENES, render(), FPS and NARRATION (scene name -> text), plus optional OUTPUT (file name).
+    # Optional VOICE, SPEED, LANG (set them from the style: VOICE, SPEED, LANG = S.VOICE, S.SPEED, S.LANG).
     import importlib
     name = sys.argv[1]
-    mod = importlib.import_module("render" if name == "ep1" else name)
+    mod = importlib.import_module("render" if name == "ep1" and not os.path.exists("ep1.py") else name)
     if hasattr(mod, "NARRATION"):
         final = getattr(mod, "OUTPUT", f"{name}_narrated.mp4")
         build(mod, mod.NARRATION, name, final, 1.08 if name.startswith("short") else 1.0)
